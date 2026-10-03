@@ -1,0 +1,1191 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>ADINDA | Beauty Portfolio</title>
+
+    <!-- Google Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+
+        :root {
+            --cream: #f8f3ed;
+            --dark: #171514;
+            --brown: #8d6655;
+            --pink: #d7a79b;
+            --light-pink: #ead3cc;
+            --white: #ffffff;
+        }
+
+        body {
+            font-family: "DM Sans", sans-serif;
+            background: var(--cream);
+            color: var(--dark);
+            overflow-x: hidden;
+        }
+
+        /* =========================
+           LOADING SCREEN
+        ========================= */
+
+        #loader {
+            position: fixed;
+            inset: 0;
+            background: var(--dark);
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            transition: 1s ease;
+        }
+
+        .loader-logo {
+            font-family: "Playfair Display", serif;
+            color: white;
+            font-size: 65px;
+            letter-spacing: 12px;
+            animation: logoPulse 1.5s infinite alternate;
+        }
+
+        .loader-text {
+            color: #c8bdb8;
+            margin-top: 15px;
+            letter-spacing: 5px;
+            font-size: 11px;
+        }
+
+        .loader-line {
+            width: 180px;
+            height: 2px;
+            background: #4b4441;
+            margin-top: 30px;
+            overflow: hidden;
+        }
+
+        .loader-line::after {
+            content: "";
+            display: block;
+            width: 50%;
+            height: 100%;
+            background: white;
+            animation: loading 1.3s infinite;
+        }
+
+        @keyframes loading {
+            0% {
+                transform: translateX(-100%);
+            }
+            100% {
+                transform: translateX(300%);
+            }
+        }
+
+        @keyframes logoPulse {
+            from {
+                opacity: .5;
+                transform: scale(.97);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        #loader.hide {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        /* =========================
+           NAVBAR
+        ========================= */
+
+        header {
+            position: fixed;
+            width: 100%;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+            padding: 25px 6%;
+            transition: .4s;
+        }
+
+        header.scrolled {
+            background: rgba(248, 243, 237, .88);
+            backdrop-filter: blur(15px);
+            padding: 16px 6%;
+            box-shadow: 0 5px 30px rgba(0,0,0,.05);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: "Playfair Display", serif;
+            font-size: 27px;
+            font-weight: 700;
+            letter-spacing: 5px;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 38px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--dark);
+            font-size: 13px;
+            font-weight: 600;
+            position: relative;
+            padding-bottom: 6px;
+        }
+
+        .nav-links a::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 0;
+            height: 2px;
+            background: var(--brown);
+            transition: .3s;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .nav-links a:hover {
+            color: var(--brown);
+        }
+
+        .menu-btn {
+            display: none;
+            border: none;
+            background: transparent;
+            font-size: 25px;
+            cursor: pointer;
+        }
+
+        /* =========================
+           HERO
+        ========================= */
+
+        .hero {
+            min-height: 100vh;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            align-items: center;
+            padding: 120px 8% 70px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: "BEAUTY";
+            position: absolute;
+            font-family: "Playfair Display", serif;
+            font-size: clamp(100px, 18vw, 260px);
+            color: rgba(141,102,85,.06);
+            right: -30px;
+            bottom: -30px;
+            pointer-events: none;
+        }
+
+        .hero-text {
+            position: relative;
+            z-index: 2;
+        }
+
+        .small-title {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: var(--brown);
+            font-size: 12px;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+        }
+
+        .small-title::before {
+            content: "";
+            width: 45px;
+            height: 1px;
+            background: var(--brown);
+        }
+
+        .hero h1 {
+            font-family: "Playfair Display", serif;
+            font-size: clamp(60px, 8vw, 110px);
+            line-height: .9;
+            font-weight: 600;
+        }
+
+        .hero h1 span {
+            color: var(--brown);
+            font-style: italic;
+        }
+
+        .hero-description {
+            max-width: 480px;
+            margin: 30px 0;
+            color: #6e6561;
+            line-height: 1.8;
+            font-size: 15px;
+        }
+
+        .hero-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            background: var(--dark);
+            color: white;
+            padding: 16px 25px;
+            text-decoration: none;
+            font-size: 13px;
+            transition: .3s;
+        }
+
+        .hero-button:hover {
+            background: var(--brown);
+            transform: translateY(-4px);
+        }
+
+        .hero-image {
+            display: flex;
+            justify-content: center;
+            position: relative;
+        }
+
+        .image-frame {
+            width: min(420px, 80%);
+            height: 570px;
+            position: relative;
+        }
+
+        .image-frame::before {
+            content: "";
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border: 1px solid var(--brown);
+            top: 18px;
+            left: 18px;
+        }
+
+        .image-frame img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            position: relative;
+            z-index: 2;
+            filter: saturate(.85);
+        }
+
+        .image-label {
+            position: absolute;
+            z-index: 3;
+            bottom: 25px;
+            left: -35px;
+            background: white;
+            padding: 17px 25px;
+            box-shadow: 0 15px 40px rgba(0,0,0,.1);
+        }
+
+        .image-label strong {
+            display: block;
+            font-family: "Playfair Display", serif;
+            font-size: 20px;
+        }
+
+        .image-label small {
+            color: #81756f;
+        }
+
+        /* =========================
+           SECTION
+        ========================= */
+
+        section {
+            padding: 110px 8%;
+        }
+
+        .section-title {
+            margin-bottom: 55px;
+        }
+
+        .section-title span {
+            color: var(--brown);
+            letter-spacing: 4px;
+            font-size: 11px;
+            text-transform: uppercase;
+        }
+
+        .section-title h2 {
+            font-family: "Playfair Display", serif;
+            font-size: clamp(40px, 5vw, 65px);
+            margin-top: 8px;
+        }
+
+        /* =========================
+           ABOUT
+        ========================= */
+
+        .about {
+            background: white;
+        }
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: .8fr 1.2fr;
+            gap: 80px;
+            align-items: center;
+        }
+
+        .about-number {
+            font-family: "Playfair Display", serif;
+            font-size: 150px;
+            color: var(--light-pink);
+            line-height: 1;
+        }
+
+        .about-text p {
+            color: #6d6662;
+            line-height: 1.9;
+            margin-bottom: 20px;
+        }
+
+        .info-box {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .info {
+            padding: 20px;
+            border: 1px solid #eee2dd;
+        }
+
+        .info small {
+            color: var(--brown);
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .info strong {
+            font-size: 14px;
+        }
+
+        /* =========================
+           SKILLS
+        ========================= */
+
+        .skills {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .skill-card {
+            background: white;
+            padding: 40px 30px;
+            border: 1px solid transparent;
+            transition: .4s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .skill-card::before {
+            content: "";
+            position: absolute;
+            width: 100%;
+            height: 3px;
+            background: var(--brown);
+            left: 0;
+            bottom: 0;
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: .4s;
+        }
+
+        .skill-card:hover {
+            transform: translateY(-10px);
+            border-color: #eadbd5;
+            box-shadow: 0 20px 50px rgba(0,0,0,.07);
+        }
+
+        .skill-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .skill-icon {
+            font-size: 35px;
+            margin-bottom: 25px;
+        }
+
+        .skill-card h3 {
+            font-family: "Playfair Display", serif;
+            font-size: 25px;
+            margin-bottom: 12px;
+        }
+
+        .skill-card p {
+            color: #756d69;
+            font-size: 14px;
+            line-height: 1.7;
+        }
+
+        /* =========================
+           PORTFOLIO
+        ========================= */
+
+        .portfolio {
+            background: var(--dark);
+            color: white;
+        }
+
+        .portfolio .section-title span {
+            color: var(--pink);
+        }
+
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .portfolio-item {
+            height: 400px;
+            position: relative;
+            overflow: hidden;
+            background: #292421;
+        }
+
+        .portfolio-item:nth-child(2) {
+            margin-top: 70px;
+        }
+
+        .portfolio-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: .7s;
+            filter: grayscale(20%);
+        }
+
+        .portfolio-item:hover img {
+            transform: scale(1.08);
+            filter: grayscale(0);
+        }
+
+        .portfolio-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(transparent 45%, rgba(0,0,0,.8));
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 25px;
+        }
+
+        .portfolio-overlay h3 {
+            font-family: "Playfair Display", serif;
+            font-size: 25px;
+        }
+
+        .portfolio-overlay p {
+            color: #ddd;
+            font-size: 12px;
+            margin-top: 5px;
+        }
+
+        /* =========================
+           CONTACT
+        ========================= */
+
+        .contact {
+            text-align: center;
+        }
+
+        .contact p {
+            max-width: 550px;
+            margin: 0 auto 35px;
+            color: #6d6662;
+            line-height: 1.8;
+        }
+
+        .contact-button {
+            display: inline-block;
+            padding: 16px 35px;
+            background: var(--dark);
+            color: white;
+            text-decoration: none;
+            transition: .3s;
+        }
+
+        .contact-button:hover {
+            background: var(--brown);
+            transform: translateY(-4px);
+        }
+
+        /* =========================
+           FOOTER
+        ========================= */
+
+        footer {
+            background: #11100f;
+            color: #aaa;
+            padding: 30px 8%;
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+        }
+
+        footer strong {
+            color: white;
+            font-family: "Playfair Display", serif;
+            letter-spacing: 2px;
+        }
+
+        /* =========================
+           FLOATING CONTACT
+        ========================= */
+
+        .social-container {
+            position: fixed;
+            bottom: 25px;
+            left: 25px;
+            z-index: 5000;
+        }
+
+        .social-toggle {
+            width: 55px;
+            height: 55px;
+            border: none;
+            border-radius: 50%;
+            background: var(--dark);
+            color: white;
+            font-size: 21px;
+            cursor: pointer;
+            box-shadow: 0 8px 25px rgba(0,0,0,.2);
+            transition: .3s;
+        }
+
+        .social-toggle:hover {
+            transform: scale(1.08);
+            background: var(--brown);
+        }
+
+        .social-links {
+            position: absolute;
+            bottom: 68px;
+            left: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            opacity: 0;
+            pointer-events: none;
+            transform: translateY(15px);
+            transition: .3s;
+        }
+
+        .social-container.active .social-links {
+            opacity: 1;
+            pointer-events: auto;
+            transform: translateY(0);
+        }
+
+        .social-links a {
+            width: 48px;
+            height: 48px;
+            background: white;
+            color: var(--dark);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-decoration: none;
+            font-size: 16px;
+            box-shadow: 0 5px 20px rgba(0,0,0,.15);
+            transition: .3s;
+        }
+
+        .social-links a:hover {
+            transform: translateX(7px);
+            background: var(--brown);
+            color: white;
+        }
+
+        /* =========================
+           REVEAL ANIMATION
+        ========================= */
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: 1s ease;
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* =========================
+           RESPONSIVE
+        ========================= */
+
+        @media (max-width: 900px) {
+
+            .nav-links {
+                position: absolute;
+                top: 75px;
+                right: 6%;
+                background: white;
+                width: 220px;
+                flex-direction: column;
+                padding: 25px;
+                gap: 20px;
+                box-shadow: 0 15px 40px rgba(0,0,0,.12);
+                opacity: 0;
+                pointer-events: none;
+                transform: translateY(-10px);
+                transition: .3s;
+            }
+
+            .nav-links.active {
+                opacity: 1;
+                pointer-events: auto;
+                transform: translateY(0);
+            }
+
+            .menu-btn {
+                display: block;
+            }
+
+            .hero {
+                grid-template-columns: 1fr;
+                gap: 60px;
+                padding-top: 150px;
+            }
+
+            .hero-image {
+                order: -1;
+            }
+
+            .image-frame {
+                height: 470px;
+            }
+
+            .about-grid {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+
+            .skills,
+            .portfolio-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (max-width: 600px) {
+
+            section {
+                padding: 80px 6%;
+            }
+
+            header {
+                padding: 20px 6%;
+            }
+
+            .hero {
+                padding: 130px 6% 70px;
+            }
+
+            .hero h1 {
+                font-size: 65px;
+            }
+
+            .image-frame {
+                width: 85%;
+                height: 430px;
+            }
+
+            .image-label {
+                left: -15px;
+            }
+
+            .skills,
+            .portfolio-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .portfolio-item,
+            .portfolio-item:nth-child(2) {
+                margin-top: 0;
+                height: 430px;
+            }
+
+            .info-box {
+                grid-template-columns: 1fr;
+            }
+
+            .about-number {
+                font-size: 100px;
+            }
+
+            footer {
+                flex-direction: column;
+                gap: 10px;
+                text-align: center;
+            }
+
+            .social-container {
+                left: 18px;
+                bottom: 18px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- =========================
+         LOADING
+    ========================== -->
+
+    <div id="loader">
+        <div class="loader-logo">ADINDA</div>
+        <div class="loader-text">BEAUTY PORTFOLIO</div>
+        <div class="loader-line"></div>
+    </div>
+
+
+    <!-- =========================
+         NAVBAR
+    ========================== -->
+
+    <header id="header">
+        <nav>
+            <div class="logo">ADINDA.</div>
+
+            <button class="menu-btn" id="menuBtn">☰</button>
+
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#home">HOME</a></li>
+                <li><a href="#about">ABOUT</a></li>
+                <li><a href="#skills">SKILLS</a></li>
+                <li><a href="#portfolio">PORTFOLIO</a></li>
+                <li><a href="#contact">CONTACT</a></li>
+            </ul>
+        </nav>
+    </header>
+
+
+    <!-- =========================
+         HOME
+    ========================== -->
+
+    <section class="hero" id="home">
+
+        <div class="hero-text reveal">
+
+            <div class="small-title">
+                Beauty Student Portfolio
+            </div>
+
+            <h1>
+                Hello,<br>
+                I'm <span>Adinda.</span>
+            </h1>
+
+            <p class="hero-description">
+                Siswi kelas XII SMK jurusan kecantikan yang memiliki
+                ketertarikan dalam dunia beauty, makeup, skincare,
+                dan kreativitas visual.
+            </p>
+
+            <a href="#portfolio" class="hero-button">
+                Lihat Portofolio →
+            </a>
+
+        </div>
+
+        <div class="hero-image reveal">
+
+            <div class="image-frame">
+
+                <!-- GANTI FOTO DI SINI -->
+                <img src="adinda.jpg" alt="Foto Adinda">
+
+                <div class="image-label">
+                    <strong>ADINDA</strong>
+                    <small>Beauty Student · Grade XII</small>
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         ABOUT
+    ========================== -->
+
+    <section class="about" id="about">
+
+        <div class="section-title reveal">
+            <span>01 — About Me</span>
+            <h2>Who I Am</h2>
+        </div>
+
+        <div class="about-grid">
+
+            <div class="about-number reveal">
+                12
+            </div>
+
+            <div class="about-text reveal">
+
+                <p>
+                    Halo, saya <strong>Adinda</strong>, siswi kelas XII
+                    SMK jurusan Kecantikan. Saya memiliki ketertarikan
+                    terhadap dunia kecantikan dan terus mengembangkan
+                    kemampuan melalui pembelajaran serta praktik.
+                </p>
+
+                <p>
+                    Bagi saya, kecantikan bukan hanya tentang penampilan,
+                    tetapi juga tentang kreativitas, ketelitian,
+                    kepercayaan diri, dan kemampuan untuk membuat
+                    seseorang merasa lebih nyaman dengan dirinya.
+                </p>
+
+                <div class="info-box">
+
+                    <div class="info">
+                        <small>STATUS</small>
+                        <strong>Student · Grade XII</strong>
+                    </div>
+
+                    <div class="info">
+                        <small>MAJOR</small>
+                        <strong>Beauty & Cosmetology</strong>
+                    </div>
+
+                    <div class="info">
+                        <small>INTEREST</small>
+                        <strong>Makeup · Skincare</strong>
+                    </div>
+
+                    <div class="info">
+                        <small>GOAL</small>
+                        <strong>Beauty Professional</strong>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         SKILLS
+    ========================== -->
+
+    <section id="skills">
+
+        <div class="section-title reveal">
+            <span>02 — What I Do</span>
+            <h2>My Skills</h2>
+        </div>
+
+        <div class="skills">
+
+            <div class="skill-card reveal">
+                <div class="skill-icon">✦</div>
+                <h3>Makeup</h3>
+                <p>
+                    Mempelajari berbagai teknik dasar makeup,
+                    mulai dari complexion hingga finishing.
+                </p>
+            </div>
+
+            <div class="skill-card reveal">
+                <div class="skill-icon">♡</div>
+                <h3>Skincare</h3>
+                <p>
+                    Memahami dasar perawatan kulit dan pentingnya
+                    menjaga kesehatan kulit.
+                </p>
+            </div>
+
+            <div class="skill-card reveal">
+                <div class="skill-icon">✧</div>
+                <h3>Beauty Styling</h3>
+                <p>
+                    Mengembangkan kreativitas dalam styling,
+                    penataan penampilan dan visual beauty.
+                </p>
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         PORTFOLIO
+    ========================== -->
+
+    <section class="portfolio" id="portfolio">
+
+        <div class="section-title reveal">
+            <span>03 — Selected Works</span>
+            <h2>My Portfolio</h2>
+        </div>
+
+        <div class="portfolio-grid">
+
+            <div class="portfolio-item reveal">
+
+                <img src="makeupdd.jpg" alt="Makeup Portfolio">
+
+                <div class="portfolio-overlay">
+                    <h3>Beauty Makeup</h3>
+                    <p>Makeup Practice</p>
+                </div>
+
+            </div>
+
+            <div class="portfolio-item reveal">
+
+                <img src="nails.jpg" alt="Beauty Portfolio">
+
+                <div class="portfolio-overlay">
+                    <h3>Nail Art</h3>
+                    <p>Creative Beauty</p>
+                </div>
+
+            </div>
+
+            <div class="portfolio-item reveal">
+
+                <img src="adinda.jpg" alt="Makeup Work">
+
+                <div class="portfolio-overlay">
+                    <h3>Makeup Project</h3>
+                    <p>School Project</p>
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         CONTACT
+    ========================== -->
+
+    <section class="contact" id="contact">
+
+        <div class="section-title reveal">
+            <span>04 — Let's Connect</span>
+            <h2>Get In Touch</h2>
+        </div>
+
+        <p class="reveal">
+           Discover my work, follow my journey, and let’s create something beautiful together.
+        </p>
+
+        <a href="https://wa.me/6281234567890"
+           target="_blank"
+           class="contact-button reveal">
+            Chat via WhatsApp
+        </a>
+
+    </section>
+
+
+    <!-- =========================
+         FOOTER
+    ========================== -->
+
+    <footer>
+        <strong>ADINDA.</strong>
+
+        <span>
+            © 2026 Adinda Beauty Portfolio
+        </span>
+    </footer>
+
+
+    <!-- =========================
+         FLOATING SOCIAL BUTTON
+    ========================== -->
+
+    <div class="social-container" id="socialContainer">
+
+        <div class="social-links">
+
+    <!-- WhatsApp -->
+    <a href="https://wa.me/6289505629604"
+       target="_blank"
+       title="WhatsApp">
+        <i class="fa-brands fa-whatsapp"></i>
+    </a>
+
+    <!-- Instagram -->
+    <a href="https://instagram.com/adrdsty"
+       target="_blank"
+       title="Instagram">
+        <i class="fa-brands fa-instagram"></i>
+    </a>
+
+    <!-- TikTok -->
+    <a href="https://tiktok.com/@adrdsty"
+       target="_blank"
+       title="TikTok">
+        <i class="fa-brands fa-tiktok"></i>
+    </a>
+
+</div>
+
+        <button class="social-toggle" id="socialToggle">
+            +
+        </button>
+
+    </div>
+
+
+    <!-- =========================
+         JAVASCRIPT
+    ========================== -->
+
+    <script>
+
+        // LOADING SCREEN
+        window.addEventListener("load", function() {
+
+            setTimeout(function() {
+                document.getElementById("loader")
+                    .classList.add("hide");
+            }, 1400);
+
+        });
+
+
+        // NAVBAR SCROLL
+        window.addEventListener("scroll", function() {
+
+            const header = document.getElementById("header");
+
+            if (window.scrollY > 50) {
+                header.classList.add("scrolled");
+            } else {
+                header.classList.remove("scrolled");
+            }
+
+        });
+
+
+        // MOBILE MENU
+        const menuBtn = document.getElementById("menuBtn");
+        const navLinks = document.getElementById("navLinks");
+
+        menuBtn.addEventListener("click", function() {
+            navLinks.classList.toggle("active");
+        });
+
+
+        // TUTUP MENU SETELAH KLIK
+        document.querySelectorAll(".nav-links a").forEach(function(link) {
+
+            link.addEventListener("click", function() {
+                navLinks.classList.remove("active");
+            });
+
+        });
+
+
+        // SOCIAL BUTTON
+        const socialToggle =
+            document.getElementById("socialToggle");
+
+        const socialContainer =
+            document.getElementById("socialContainer");
+
+        socialToggle.addEventListener("click", function() {
+
+            socialContainer.classList.toggle("active");
+
+            if (socialContainer.classList.contains("active")) {
+                socialToggle.innerHTML = "×";
+            } else {
+                socialToggle.innerHTML = "+";
+            }
+
+        });
+
+
+        // SCROLL REVEAL
+        const reveals = document.querySelectorAll(".reveal");
+
+        function revealOnScroll() {
+
+            reveals.forEach(function(element) {
+
+                const windowHeight =
+                    window.innerHeight;
+
+                const elementTop =
+                    element.getBoundingClientRect().top;
+
+                if (elementTop <
+                    windowHeight - 80) {
+
+                    element.classList.add("active");
+
+                }
+
+            });
+
+        }
+
+        window.addEventListener("scroll", revealOnScroll);
+
+        revealOnScroll();
+
+    </script>
+
+</body>
+</html>
+```
